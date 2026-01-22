@@ -1,0 +1,22 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: allow-approved-registries
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+    - name: only-allow-nginx-and-ghcr
+      match:
+        resources:
+          kinds:
+            - Pod
+      validate:
+        message: "Only images from approved sources are allowed (nginx* or ghcr.io/*)."
+        anyPattern:
+          - spec:
+              containers:
+                - image: "nginx*"
+          - spec:
+              containers:
+                - image: "ghcr.io/*"
