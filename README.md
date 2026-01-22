@@ -21,6 +21,22 @@ Follow in order:
 4. `docs/05-deploy-with-argocd.md`
 5. `docs/06-verify-policies.md`
 
+## 🧰 Technology Stack
+
+| Layer | Technology | Purpose |
+|------|------------|---------|
+| Version Control | Git & GitHub | Source of truth for GitOps configuration |
+| Container Platform | Docker | Containerization of application workloads |
+| Container Registry | GitHub Container Registry (GHCR) | Storage of container images |
+| Orchestration | Kubernetes | Container orchestration and workload management |
+| GitOps Engine | Argo CD | Continuous deployment from Git repository |
+| Configuration Management | Kustomize | Environment-based manifest customization |
+| Policy Engine | Kyverno | Policy-as-Code and security enforcement |
+| Security Model | DevSecOps | Shift-left and policy-driven security |
+| Infrastructure | Minikube | Local Kubernetes cluster for testing |
+| Operating System | Linux (Ubuntu) | Development and execution environment |
+
+
 ## Author
 Bansi Pambhar
 
