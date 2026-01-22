@@ -1,0 +1,33 @@
+# All Commands Cheat Sheet
+
+## Minikube
+minikube start --driver=docker
+
+## Argo CD
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl port-forward svc/argocd-server -n argocd 8081:443
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+
+## Kyverno
+helm repo add kyverno https://kyverno.github.io/kyverno/
+helm repo update
+kubectl create namespace kyverno
+helm install kyverno kyverno/kyverno -n kyverno
+kubectl get pods -n kyverno
+
+## Apply policies
+kubectl apply -f security/kyverno/00-namespace.yaml
+kubectl apply -f security/kyverno/01-allow-approved-registries.yaml
+kubectl apply -f security/kyverno/02-require-requests-limits.yaml
+kubectl apply -f security/kyverno/03-disallow-latest-tag.yaml
+kubectl apply -f security/kyverno/04-disallow-privileged.yaml
+
+## Create Argo app
+kubectl apply -f argocd/applications/secure-app-dev.yaml
+
+## Verify
+kubectl get ns
+kubectl get pods -n secure-app-dev
+kubectl get svc -n secure-app-dev
+kubectl get clusterpolicies
